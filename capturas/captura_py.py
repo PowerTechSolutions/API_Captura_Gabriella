@@ -22,15 +22,14 @@ for process in process_list:
     process_info = process.as_dict(attrs=['name', 'cpu_times'])
     nome = process_info['name']
     cpu_user = process_info['cpu_times'].user
-    cpu_system = process_info['cpu_times'].system
 
     if cpu_user <= 0:
             print("foi detectado um erro na captura")
     else:
         cursor.execute('''
-            INSERT INTO processos (nome, tempo_user, tempo_cpu)
-            VALUES (%s, %s, %s)
-            ''', (nome, cpu_user, cpu_system))
+            INSERT INTO processos (nome, tempo_user)
+            VALUES (%s, %s)
+            ''', (nome, cpu_user))
 
         captured_processes += 1
 
