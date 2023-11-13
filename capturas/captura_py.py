@@ -11,10 +11,10 @@ conexao = mysql.connector.connect(
 cursor = conexao.cursor()
 
 # lista de processos do psutil
-process_list = psutil.process_iter()
+lista_processos = psutil.process_iter()
 
 #contador
-captured_processes = 0
+contador_processos = 0
 
 # Iterar sobre os processos e inserir no banco de dados
 for process in process_list:
@@ -31,10 +31,10 @@ for process in process_list:
             VALUES (%s, %s)
             ''', (nome, cpu_user))
 
-        captured_processes += 1
+        contador_processos += 1
 
         # Parar a captura após 300 processos
-    if captured_processes >= 300:
+    if contador_processos >= 300:
         break
 
     #except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
