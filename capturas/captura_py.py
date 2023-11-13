@@ -1,11 +1,12 @@
 import psutil
 import mysql.connector
+from mysql.connector import connect 
 
 #conexao ao banco
-conexao = mysql.connector.connect(
+conexao = connect(
     host='localhost',
-    user='Power',
-    password='urubu100',
+    user='aluno',
+    password='sptech',
     database='powertechsolutions'
 )
 cursor = conexao.cursor()
@@ -16,8 +17,10 @@ lista_processos = psutil.process_iter()
 #contador
 contador_processos = 0
 
+#connection = mysql_connection('localhost', 'aluno', 'sptech', 'powertechsolutions')
+
 # Iterar sobre os processos e inserir no banco de dados
-for process in process_list:
+for process in lista_processos:
     #try:
     process_info = process.as_dict(attrs=['name', 'cpu_times'])
     nome = process_info['name']
