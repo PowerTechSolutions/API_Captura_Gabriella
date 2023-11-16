@@ -1,49 +1,39 @@
 import psutil
 import mysql.connector
-from mysql.connector import connect 
 
-#conexao ao banco
-conexao = connect(
-    host='localhost',
-    user='aluno',
-    password='sptech',
-    database='powertechsolutions'
+#Estabelece uma conexao com o banco de dados
+conexao = mysql.connector.connect(
+host='localhost',
+user='aluno',
+password='sptech',
+database='powertechsolutions'
 )
+    
+# Criar um cursor, que será utilzado para realizar os comandos mysql 
 cursor = conexao.cursor()
 
-# lista de processos do psutil
+# Lista de processos do psutil
 lista_processos = psutil.process_iter()
 
-#contador
-contador_processos = 0
-
-#connection = mysql_connection('localhost', 'aluno', 'sptech', 'powertechsolutions')
+# Contador para delimitar o número de capturas
+contador_processos = 300
 
 # Iterar sobre os processos e inserir no banco de dados
 for process in lista_processos:
-    #try:
-    process_info = process.as_dict(attrs=['name', 'cpu_times'])
-    nome = process_info['name']
-    cpu_user = process_info['cpu_times'].user
+        process_info = process.as_dict(attrs=['name', 'cpu_times'])
+        nome = process_info['name']
+        cpu_user = process_info['cpu_times'].user
 
-    if cpu_user <= 0:
-            print("foi detectado um erro na captura")
-    else:
-        cursor.execute('''
+        if cpu_user > 0:
+            cursor.execute('''
             INSERT INTO processos (nome, tempo_user)
             VALUES (%s, %s)
             ''', (nome, cpu_user))
 
-        contador_processos += 1
+        if process == contador_processos:
+            break
 
-        # Parar a captura após 300 processos
-    if contador_processos >= 300:
-        break
-
-    #except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-        # Lidar com exceções caso o processo não exista ou não seja acessível
-        #pass
-
-# Commit das alterações e fechar a conexão com o banco de dados
+#Commit das alterações e fechar a conexão com o banco de dados
 conexao.commit()
+cursor.close()
 conexao.close()

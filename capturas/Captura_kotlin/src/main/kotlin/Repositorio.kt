@@ -7,10 +7,16 @@ class Repositorio {
         jdbcTemplate=Conexao().conectar()
     }
 
+//    fun inserirKt(funcionalidade: Funcionalidade){
+//        jdbcTemplate.update("""
+//            insert into analise_desempenho (titulo_janela) values
+//            ("${funcionalidade.listarJanelas()}")
+//        """.trimIndent())
+//    }
 
     fun pegarId(){
         val fkProcesso: Int?= jdbcTemplate.queryForObject("""
-             SELECT id_proc FROM processos;
+             SELECT id_proc FROM processos limit 1;
          """.trimIndent(), Int::class.java)
 
          println(fkProcesso)

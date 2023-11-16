@@ -5,9 +5,9 @@ class Conexao {
     fun conectar(): JdbcTemplate {
         val dataSource = BasicDataSource()
         dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
-        dataSource.url = "jdbc:mysql://localhost:3306/powertechsolutions"
-        dataSource.username = "Power"
-        dataSource.password = "urubu100"
+        dataSource.url = "jdbc:mysql://localhost:3306/powertechsolutions?serverTimezone=UTC"
+        dataSource.username = "aluno"
+        dataSource.password = "sptech"
         return JdbcTemplate(dataSource)
     }
 

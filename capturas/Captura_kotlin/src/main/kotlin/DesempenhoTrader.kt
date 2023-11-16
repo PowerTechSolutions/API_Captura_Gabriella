@@ -4,9 +4,11 @@ fun main() {
 
     val conexao= Conexao()
 
-    repositorio.iniciar()
     conexao.conectar()
+    repositorio.iniciar()
+//    repositorio.inserirKt(funcionalidade)
     repositorio.pegarId()
     funcionalidade.listarJanelas()
+
 
 }
