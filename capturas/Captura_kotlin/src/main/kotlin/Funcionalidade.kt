@@ -6,11 +6,14 @@ class Funcionalidade {
         val looca = Looca()
         val janelas = looca.grupoDeJanelas.janelasVisiveis
 
+
+
         val listaFiltro= mutableListOf<String>()
 
-        janelas.forEach() {
+        janelas.forEach{
             val titulos = it.titulo
-            println(titulos)
+//            println(titulos)
+            listaFiltro.add(it.titulo)
         }
 
 
