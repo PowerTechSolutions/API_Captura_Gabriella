@@ -2,13 +2,12 @@ import org.apache.commons.dbcp2.BasicDataSource
 import org.springframework.jdbc.core.JdbcTemplate
 
 class Conexao {
-    fun conectar(): JdbcTemplate {
+    fun conectar() : JdbcTemplate {
         val dataSource = BasicDataSource()
-        dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
-        dataSource.url = "jdbc:mysql://localhost:3306/powertechsolutions?serverTimezone=UTC"
-        dataSource.username = "aluno"
-        dataSource.password = "sptech"
+        dataSource.driverClassName = "org.h2.Driver"
+        dataSource.url = "jdbc:h2:mem:stopify"
+        dataSource.username = "sa"
+        dataSource.password = ""
         return JdbcTemplate(dataSource)
     }
-
-        }
+}
