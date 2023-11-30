@@ -1,7 +1,7 @@
 import java.io.File
 
 class CapturaProc {
-    fun capturarPy(fkMaquina: Int){
+    fun capturarPy(fkMaquina: Int, qntdTotalProc: Int){
         val codigoPy= """
 import psutil
 import mysql.connector
@@ -17,7 +17,9 @@ try:
         password='sptech',
         database='PowerTechSolutions'
         )
-            
+        
+        total= $qntdTotalProc
+        
         # Criar um cursor, que será utilzado para realizar os comandos mysql 
         cursor = conexao.cursor()
 
@@ -33,11 +35,12 @@ try:
                 cpu_user = process_info['cpu_times'].user
                 data_hora_captura = datetime.now()
 
-                if cpu_user > 0:
+                if cpu_user > 1.0:
                     cursor.execute('''
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
                     ''', (nome, cpu_user, data_hora_captura, $fkMaquina))
+                    total++
                     
 
 finally:

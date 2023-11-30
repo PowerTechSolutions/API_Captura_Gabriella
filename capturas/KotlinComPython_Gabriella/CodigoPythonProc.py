@@ -13,7 +13,9 @@ try:
         password='sptech',
         database='PowerTechSolutions'
         )
-            
+        
+        total= 0
+        
         # Criar um cursor, que será utilzado para realizar os comandos mysql 
         cursor = conexao.cursor()
 
@@ -29,11 +31,12 @@ try:
                 cpu_user = process_info['cpu_times'].user
                 data_hora_captura = datetime.now()
 
-                if cpu_user > 0:
+                if cpu_user > 1.0:
                     cursor.execute('''
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, cpu_user, data_hora_captura, 3))
+                    ''', (nome, cpu_user, data_hora_captura, 2))
+                    total++
                     
 
 finally:
