@@ -13,8 +13,8 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='Power',
-        password='urubu100',
+        user='aluno',
+        password='sptech',
         database='PowerTechSolutions'
         )
             

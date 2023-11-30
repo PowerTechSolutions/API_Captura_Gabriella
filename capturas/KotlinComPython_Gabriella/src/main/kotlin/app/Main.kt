@@ -35,7 +35,9 @@ open class Main {
                 val maquinaEscolhida = Scanner(System.`in`)
                 maquina.IDMaquina = maquinaEscolhida.nextInt()
                 capturaProc.capturarPy(maquina.IDMaquina)
+
                 repositorioCap.enviarDesempenho(maquina.IDMaquina)
+
             }
 
         }
