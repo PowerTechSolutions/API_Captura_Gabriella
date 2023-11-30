@@ -30,8 +30,7 @@ class Repositorio_Capturas : Conexao() {
             SELECT id_proc
             FROM processos
             WHERE fkmaquina_processo = $fkMaquina
-            GROUP BY nome
-            HAVING ROUND(SUM(tempo_user) / 60, 2) > 1.0;
+            GROUP BY nome;
         """, mutableListOf<Int>()::class.java
         )
         return id
