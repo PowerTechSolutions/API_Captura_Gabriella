@@ -1,7 +1,7 @@
 import java.io.File
 
 class CapturaProc {
-    fun capturarPy(fkMaquina: Int, qntdTotalProc: Int){
+    fun capturarPy(fkMaquina: Int){
         val codigoPy= """
 import psutil
 import mysql.connector
@@ -13,12 +13,10 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='aluno',
-        password='sptech',
+        user='root',
+        password='1234.s',
         database='PowerTechSolutions'
         )
-        
-        total= $qntdTotalProc
         
         # Criar um cursor, que será utilzado para realizar os comandos mysql 
         cursor = conexao.cursor()
@@ -40,7 +38,6 @@ try:
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
                     ''', (nome, cpu_user, data_hora_captura, $fkMaquina))
-                    total++
                     
 
 finally:
@@ -51,14 +48,13 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                   
-
+                  
         """
 
         val nomeArquivoPyDefault = "CodigoPythonProc.py"
 
         File(nomeArquivoPyDefault).writeText(codigoPy)
-        Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
+        Runtime.getRuntime().exec("python3 $nomeArquivoPyDefault")
 
         println("Processos Cadastrados com Sucesso")
 

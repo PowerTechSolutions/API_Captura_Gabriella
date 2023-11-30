@@ -213,14 +213,7 @@ CREATE TABLE IF NOT EXISTS Alertas(
 	fkmaquina_processo INT,
 	FOREIGN KEY (fkmaquina_processo) REFERENCES Maquinas(IDMaquina)
 	);
-
-
-CREATE TABLE IF NOT EXISTS analise_desempenho(
-id INT AUTO_INCREMENT PRIMARY KEY,
-minutos_usados VARCHAR(30),
-fkprocesso INT,
-FOREIGN KEY (fkprocesso) REFERENCES processos (id_proc)
-);
+    
 
 -- Aréa de inserts para testes de funcionalidade 
 
@@ -286,3 +279,10 @@ INSERT INTO Componentes_monitorados VALUES
 (NULL,5,3),
 (NULL,6,3);
 
+
+
+ SELECT ROUND(SUM(tempo_user) / 60, 2) AS tempo_em_minutos
+            FROM processos
+            WHERE fkmaquina_processo = 1
+            GROUP BY nome
+            HAVING ROUND(SUM(tempo_user) / 60, 2) > 1.0;

@@ -1,10 +1,8 @@
 package app
 
 import CapturaProc
-import Desempenho
 import Maquinas
 import Repositorio
-import Repositorio_Capturas
 import Usuario
 import java.util.*
 
@@ -15,8 +13,6 @@ open class Main {
             val usuario = Usuario()
             val maquina = Maquinas()
             val capturaProc= CapturaProc()
-            val repositorioCap= Repositorio_Capturas()
-            val desempenho= Desempenho(mutableListOf(), mutableListOf(), 0)
 
             println("Bem-vindo a PowerTech. Por favor, faca o login para usar nosso sistema.\r\n")
             println("Insira sua senha:")
@@ -25,7 +21,6 @@ open class Main {
             val senha = senhaInserida.next().toString()
 
             repositorio.iniciarJdbc()
-            repositorioCap.iniciarJdbc()
 
             usuario.Senha = senha
 
@@ -36,13 +31,8 @@ open class Main {
 
                 val maquinaEscolhida = Scanner(System.`in`)
                 maquina.IDMaquina = maquinaEscolhida.nextInt()
-                capturaProc.capturarPy(maquina.IDMaquina, desempenho.totalProcessos)
-                val tempoMin= repositorioCap.getTempo(maquina.IDMaquina)
-                desempenho.tempo= tempoMin
-                val idproc= repositorioCap.getId(maquina.IDMaquina)
-                desempenho.id= idproc
+                capturaProc.capturarPy(maquina.IDMaquina)
 
-                repositorioCap.enviarDesempenho(desempenho.id, desempenho.tempo, desempenho.totalProcessos)
 
             }
 

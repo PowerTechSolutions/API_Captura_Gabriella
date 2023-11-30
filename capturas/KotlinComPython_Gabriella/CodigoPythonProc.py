@@ -9,12 +9,10 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='aluno',
-        password='sptech',
+        user='root',
+        password='1234.s',
         database='PowerTechSolutions'
         )
-        
-        total= 0
         
         # Criar um cursor, que será utilzado para realizar os comandos mysql 
         cursor = conexao.cursor()
@@ -36,7 +34,6 @@ try:
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
                     ''', (nome, cpu_user, data_hora_captura, 2))
-                    total++
                     
 
 finally:
@@ -47,6 +44,5 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                   
-
+                  
         
