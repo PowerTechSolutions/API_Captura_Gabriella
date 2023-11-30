@@ -1,12 +1,13 @@
+import java.io.File
+
+class CapturaProc {
+    fun capturarPy(fkMaquina: Int){
+        val codigoPy= """
 import psutil
 import mysql.connector
 import time
 from datetime import datetime
 from datetime import time
-
-teste= process_info['pid']
-teste2= teste.parent()
-print(teste2)
 
 try:
         #Estabelece uma conexao com o banco de dados
@@ -36,7 +37,7 @@ try:
                     cursor.execute('''
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, cpu_user, data_hora_captura, 1 ))
+                    ''', (nome, cpu_user, data_hora_captura, $fkMaquina))
                     
 
 finally:
@@ -47,5 +48,16 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                    
+                   
 
+        """
+
+        val nomeArquivoPyDefault = "CodigoPythonProc.py"
+
+        File(nomeArquivoPyDefault).writeText(codigoPy)
+        Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
+
+        println("Processos Cadastrados com Sucesso")
+
+    }
+}

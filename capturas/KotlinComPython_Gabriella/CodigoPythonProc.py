@@ -1,12 +1,9 @@
+
 import psutil
 import mysql.connector
 import time
 from datetime import datetime
 from datetime import time
-
-teste= process_info['pid']
-teste2= teste.parent()
-print(teste2)
 
 try:
         #Estabelece uma conexao com o banco de dados
@@ -36,7 +33,7 @@ try:
                     cursor.execute('''
                     INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, cpu_user, data_hora_captura, 1 ))
+                    ''', (nome, cpu_user, data_hora_captura, 3))
                     
 
 finally:
@@ -47,5 +44,6 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                    
+                   
 
+        
