@@ -8,7 +8,7 @@ class Repositorio : Conexao() {
         jdbcTemplate = super.iniciar()
     }
 
-    fun validarCpf(senha: String): Boolean {
+    fun validar(senha: String): Boolean {
         val usuario = jdbcTemplate.queryForObject(
             "SELECT * FROM Usuario_Dashboard WHERE Senha = $senha",
             BeanPropertyRowMapper(Usuario::class.java)

@@ -24,7 +24,7 @@ open class Main {
 
             usuario.Senha = senha
 
-            if (repositorio.validarCpf(usuario.Senha)) {
+            if (repositorio.validar(usuario.Senha)) {
                 usuario.IDUsuario = repositorio.pegarId(usuario.Senha)
                 val maquinas = repositorio.resgatarMaquinas(usuario.IDUsuario)
                 println("Qual a numeracao da maquina em que esta instalando o servico? $maquinas\"\r\n")
@@ -32,8 +32,6 @@ open class Main {
                 val maquinaEscolhida = Scanner(System.`in`)
                 maquina.IDMaquina = maquinaEscolhida.nextInt()
                 capturaProc.capturarPy(maquina.IDMaquina)
-
-
             }
 
         }
