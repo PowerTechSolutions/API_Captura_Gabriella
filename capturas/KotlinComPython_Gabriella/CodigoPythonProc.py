@@ -31,9 +31,9 @@ try:
 
                 if cpu_user > 1.0:
                     cursor.execute('''
-                    INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
+                    INSERT INTO Processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, cpu_user, data_hora_captura, 1))
+                    ''', (nome, cpu_user, data_hora_captura, 7))
                     
 
 finally:

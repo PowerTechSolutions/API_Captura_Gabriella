@@ -35,7 +35,7 @@ try:
 
                 if cpu_user > 1.0:
                     cursor.execute('''
-                    INSERT INTO processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
+                    INSERT INTO Processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
                     VALUES (%s, %s, %s, %s)
                     ''', (nome, cpu_user, data_hora_captura, $fkMaquina))
                     
@@ -54,7 +54,7 @@ print("Capturas realizadas com sucesso!")
         val nomeArquivoPyDefault = "CodigoPythonProc.py"
 
         File(nomeArquivoPyDefault).writeText(codigoPy)
-        Runtime.getRuntime().exec("python $nomeArquivoPyDefault")
+        Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
 
         println("Processos Cadastrados com Sucesso")
 

@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS Alertas(
 			REFERENCES Unidade_de_negocio(IDUnidade)
 );
 	
-	CREATE TABLE IF NOT EXISTS processos (
+	CREATE TABLE IF NOT EXISTS Processos (
 	id_proc INT AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(80),
 	tempo_user DOUBLE,
@@ -214,8 +214,17 @@ CREATE TABLE IF NOT EXISTS Alertas(
 	FOREIGN KEY (fkmaquina_processo) REFERENCES Maquinas(IDMaquina)
 	);
     
+   CREATE TABLE IF NOT EXISTS Alertas_proc(
+	IDAlerta_proc INT PRIMARY KEY AUTO_INCREMENT,
+    Alerta VARCHAR(100),
+    Data_Hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FKProcesso_alerta INT,
+	CONSTRAINT FKProcesso_alerta FOREIGN KEY (FKProcesso_alerta) REFERENCES Processos(id_proc)
+	);
 
 -- Aréa de inserts para testes de funcionalidade 
+
+SELECT IDMaquina FROM Maquinas WHERE FKFuncionario = 1;
 
 INSERT INTO Grupo_Empresa VALUES
 (null,'EDP Smart','EDP ENERGIAS DO BRASIL S.A.'),
@@ -242,6 +251,9 @@ INSERT into Usuario_Dashboard VALUES
 (NULL,'davi','davi@teste.com','48372073830','12345678',1,1),
 (NULL,'henry','henry@teste.com','12345678910','87654321',1,2);
 
+INSERT into Usuario_Dashboard VALUES
+(NULL,'gabriella','gabriella.inacio@sptech.school','10987654321','18080226',1,1);
+
 INSERT INTO Componentes_cadastrados values
 (null,'CPU'),
 (null,'RAM'),
@@ -265,6 +277,14 @@ INSERT INTO Maquinas VALUES
 (null,'teste02',1,1),
 (null,'teste03',1,1);
 
+
+INSERT INTO Maquinas VALUES 
+(NULL,'maquina2_setorGabriella',3,1)
+
+INSERT INTO Maquinas VALUES 
+(NULL,'maquina1_setorA',2,1),
+(NULL,'maquina2_setorA',2,1);
+
 INSERT INTO Componentes_monitorados VALUES
 (NULL,1,1),
 (NULL,2,1),
@@ -279,10 +299,12 @@ INSERT INTO Componentes_monitorados VALUES
 (NULL,5,3),
 (NULL,6,3);
 
+/*INSERTS DAS PRINCIPAIS FERRAMENTAS*/
+INSERT INTO Processos VALUES
+(NULL, 'tradingscreen.exe', 78456.789,  '2023-12-06 14:23:45', 3),
+(NULL, 'energyquant.exe', 32451.234, '2023-12-06 09:12:34',3),
+(NULL, 'bloombergbash.exe', 555555.987, '2023-12-06 18:45:21',2),
+(NULL, 'eikon.exe', 12345.678, '2023-12-06 20:30:15',2),
+(NULL, 'powermarket.exe', 75445.728, '2023-12-06 20:30:15',1),
+(NULL, 'calypso.exe', 87654.321, '2023-12-06 12:09:08',1);
 
-
- SELECT ROUND(SUM(tempo_user) / 60, 2) AS tempo_em_minutos
-            FROM processos
-            WHERE fkmaquina_processo = 1
-            GROUP BY nome
-            HAVING ROUND(SUM(tempo_user) / 60, 2) > 1.0;
