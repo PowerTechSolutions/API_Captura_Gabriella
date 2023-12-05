@@ -1,4 +1,8 @@
+import java.io.File
 
+class CapturaProc {
+    fun capturarPy(fkMaquina: Int){
+        val codigoPy= """
 import psutil
 import mysql.connector
 import time
@@ -9,8 +13,8 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='Power',
-        password='urubu100',
+        user='aluno',
+        password='sptech',
         database='PowerTechSolutions'
         )
         
@@ -24,16 +28,16 @@ try:
 
         # Iterar sobre os processos e inserir no banco de dados
         for process in lista_processos:
-                process_info = process.as_dict(attrs=['name', 'cpu_times'])
+                process_info = process.as_dict(attrs=['name'])
                 nome = process_info['name']
-                cpu_user = process_info['cpu_times'].user
                 data_hora_captura = datetime.now()
+                ram= round(psutil.virtual_memory().percent, 2)
 
-                if cpu_user > 1.0:
+                if ram > 1.0:
                     cursor.execute('''
-                    INSERT INTO Processos (nome, tempo_user, dthora_captura, fkmaquina_processo)
+                    INSERT INTO Processos (nomeProcesso, uso_ram, data_hora, fkMaquina)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, cpu_user, data_hora_captura, 7))
+                    ''', (nome, ram, data_hora_captura, $fkMaquina))
                     
 
 finally:
@@ -44,5 +48,14 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                  
-        
+                          """
+
+        val nomeArquivoPyDefault = "CodigoPythonProc.py"
+
+        File(nomeArquivoPyDefault).writeText(codigoPy)
+        Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
+
+        println("Processos Cadastrados com Sucesso")
+
+    }
+}

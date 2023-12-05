@@ -8,18 +8,18 @@ class Repositorio : Conexao() {
         jdbcTemplate = super.iniciar()
     }
 
-    fun validar(senha: String): Boolean {
+    fun validar(email: String): Boolean {
         val usuario = jdbcTemplate.queryForObject(
-            "SELECT * FROM Usuario_Dashboard WHERE Senha = $senha",
+            "SELECT * FROM Usuario_Dashboard WHERE Email like '$email'",
             BeanPropertyRowMapper(Usuario::class.java)
         )
 
         return usuario != null
     }
 
-    fun pegarId(senha: String): Int {
+    fun pegarId(email: String): Int {
         val select = jdbcTemplate.queryForObject(
-            """SELECT IDUsuario FROM Usuario_Dashboard WHERE Senha= $senha""",
+            """SELECT IDUsuario FROM Usuario_Dashboard WHERE Email like '$email'""",
             Int::class.java
         )
 
@@ -45,4 +45,7 @@ class Repositorio : Conexao() {
 
         return resposta
     }
+
+
+
 }
