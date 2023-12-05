@@ -9,8 +9,8 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='aluno',
-        password='sptech',
+        user='Power',
+        password='urubu100',
         database='PowerTechSolutions'
         )
         
