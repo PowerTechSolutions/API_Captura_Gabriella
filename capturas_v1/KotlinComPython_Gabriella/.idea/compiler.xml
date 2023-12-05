@@ -7,10 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="power-tech" />
+        <module name="KotlinComPython_Gabriella" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="KotlinComPython_Gabriella" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
