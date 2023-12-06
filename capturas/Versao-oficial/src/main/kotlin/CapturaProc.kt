@@ -8,13 +8,15 @@ import mysql.connector
 import time
 from datetime import datetime
 from datetime import time
+import pymssql
+
 
 try:
         #Estabelece uma conexao com o banco de dados
-        conexao = mysql.connector.connect(
-        host='localhost',
-        user='Power',
-        password='urubu100',
+        conexao = pymssql.connector.connect(
+        server='34.194.127.191',
+        user='sa',
+        password='myLOVEisthe0506',
         database='PowerTechSolutions'
         )
         

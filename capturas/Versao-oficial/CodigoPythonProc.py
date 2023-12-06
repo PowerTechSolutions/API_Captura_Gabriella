@@ -33,7 +33,7 @@ try:
                     cursor.execute('''
                     INSERT INTO Processos (nomeProcesso, uso_ram, data_hora, fkMaquina)
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, ram, data_hora_captura, 4))
+                    ''', (nome, ram, data_hora_captura, 5))
                     
 
 finally:
