@@ -1,25 +1,25 @@
 import org.springframework.jdbc.core.BeanPropertyRowMapper
 import org.springframework.jdbc.core.JdbcTemplate
 
-class Repositorio : Conexao() {
+class Repositorio : ConexaoLocal() {
     private lateinit var jdbcTemplate: JdbcTemplate
 
     fun iniciarJdbc() {
         jdbcTemplate = super.iniciar()
     }
 
-    fun validar(email: String): Boolean {
+    fun validar(email: String,senha:String): Boolean {
         val usuario = jdbcTemplate.queryForObject(
-            "SELECT * FROM Usuario_Dashboard WHERE Email like '$email'",
+            "SELECT * FROM Usuario_Dashboard WHERE Email = '$email' AND Senha = '$senha'",
             BeanPropertyRowMapper(Usuario::class.java)
         )
 
         return usuario != null
     }
 
-    fun pegarId(email: String): Int {
+    fun pegarId(email: String,senha:String): Int {
         val select = jdbcTemplate.queryForObject(
-            """SELECT IDUsuario FROM Usuario_Dashboard WHERE Email like '$email'""",
+            """SELECT IDUsuario FROM Usuario_Dashboard WHERE Email = '$email' AND Senha = '$senha'""",
             Int::class.java
         )
 

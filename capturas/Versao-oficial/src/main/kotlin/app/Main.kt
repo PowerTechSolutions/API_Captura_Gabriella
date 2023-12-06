@@ -1,6 +1,7 @@
 package app
 
 import CapturaProc
+import CapturaProcLocal
 import Maquinas
 import Repositorio
 import Usuario
@@ -12,26 +13,28 @@ open class Main {
             val repositorio = Repositorio()
             val usuario = Usuario()
             val maquina = Maquinas()
-            val capturaProc= CapturaProc()
+            val capturaProcLocal= CapturaProcLocal()
 
             println("Bem-vindo a PowerTech. Por favor, faca o login para usar nosso sistema.\r\n")
             println("Insira seu email:")
 
-            val emailInserido = Scanner(System.`in`)
-            val email = emailInserido.next().toString()
+            val sn = Scanner(System.`in`)
+            val email = sn.next().toString()
+
+            val senha = sn.next().toString()
 
             repositorio.iniciarJdbc()
 
             usuario.Email = email
 
-            if (repositorio.validar(usuario.Email)) {
-                usuario.IDUsuario = repositorio.pegarId(usuario.Email)
+            if (repositorio.validar(usuario.Email,senha)) {
+                usuario.IDUsuario = repositorio.pegarId(usuario.Email,senha)
                 val maquinas = repositorio.resgatarMaquinas(usuario.IDUsuario)
                 println("Qual a numeracao da maquina em que esta instalando o servico? $maquinas \r\n")
 
                 val maquinaEscolhida = Scanner(System.`in`)
                 maquina.IDMaquina = maquinaEscolhida.nextInt()
-                capturaProc.capturarPy(maquina.IDMaquina)
+                capturaProcLocal.capturarPy(maquina.IDMaquina)
 
             }
 

@@ -1,4 +1,8 @@
+import java.io.File
 
+class CapturaProcLocal {
+        fun capturarPy(fkMaquina: Int) {
+            val codigoPy = """
 import psutil
 import mysql.connector
 import time
@@ -35,7 +39,7 @@ try:
                     INSERT INTO Processos (nomeProcesso, uso_ram, data_hora, fkMaquina
                     )
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, ram, data_hora_captura, 1))
+                    ''', (nome, ram, data_hora_captura, $fkMaquina))
                     
 
 finally:
@@ -46,4 +50,14 @@ finally:
 
 print("...")
 print("Capturas realizadas com sucesso!")
-                          
+                          """
+
+            val nomeArquivoPyDefault = "CodigoPythonProc.py"
+
+            File(nomeArquivoPyDefault).writeText(codigoPy)
+            Runtime.getRuntime().exec("python $nomeArquivoPyDefault")
+
+            println("Processos Cadastrados com Sucesso")
+
+        }
+    }

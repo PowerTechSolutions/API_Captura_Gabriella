@@ -205,16 +205,20 @@ CREATE TABLE IF NOT EXISTS Alertas(
 			REFERENCES Unidade_de_negocio(IDUnidade)
 );
 	
-
-CREATE TABLE IF NOT EXISTS Processos (
-id_proc INT AUTO_INCREMENT PRIMARY KEY,
-nome VARCHAR(80),
-tempo_user DOUBLE,
-dthora_captura DATETIME,
-produtividade_maquina VARCHAR(90),
-fkmaquina_processo INT,
-FOREIGN KEY (fkmaquina_processo) REFERENCES Maquinas(IDMaquina)
+CREATE TABLE IF NOT EXISTS Processos(
+IDProcesso INT AUTO_INCREMENT,
+PID INT,
+nomeProcesso VARCHAR(255),
+cpu_processo FLOAT,
+uso_ram FLOAT,
+data_hora DATETIME,
+fkMaquina INT,
+CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
+REFERENCES Maquinas(idMaquina),
+constraint pkCompostaP primary key (IDProcesso, fkMaquina)
 );
+
+SELECT * FROM Maquinas;
     
 
 -- Aréa de inserts para testes de funcionalidade 
@@ -247,7 +251,9 @@ INSERT into Usuario_Dashboard VALUES
 (NULL,'henry','henry@teste.com','12345678910','87654321',1,2);
 
 INSERT into Usuario_Dashboard VALUES
-(NULL,'gabriella','gabi@teste.com','10987654321','18080226',1,2);
+(NULL,'gabriella','gabi@teste.com','10987654321','18080226',1,1);
+
+
 
 
 INSERT INTO Componentes_cadastrados values
@@ -292,3 +298,9 @@ INSERT INTO Componentes_monitorados VALUES
 (NULL,6,3);
 
 select * from processos;
+
+SELECT IDMaquina, Apelido, ROUND(uso_ram, 2) AS Uso_ram
+FROM processos 
+JOIN maquinas ON fkMaquina = IDMaquina 
+GROUP BY IDMaquina, Apelido, ROUND(uso_ram, 2);
+
