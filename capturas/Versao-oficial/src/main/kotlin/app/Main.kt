@@ -1,6 +1,5 @@
 package app
 
-import CapturaProc
 import CapturaProcLocal
 import Maquinas
 import Repositorio
@@ -21,14 +20,16 @@ open class Main {
             val sn = Scanner(System.`in`)
             val email = sn.next().toString()
 
+            println("Insira sua senha:")
             val senha = sn.next().toString()
 
             repositorio.iniciarJdbc()
 
+            usuario.Senha= senha
             usuario.Email = email
 
-            if (repositorio.validar(usuario.Email,senha)) {
-                usuario.IDUsuario = repositorio.pegarId(usuario.Email,senha)
+            if (repositorio.validar(usuario.Email,usuario.Senha)) {
+                usuario.IDUsuario = repositorio.pegarId(usuario.Email,usuario.Senha)
                 val maquinas = repositorio.resgatarMaquinas(usuario.IDUsuario)
                 println("Qual a numeracao da maquina em que esta instalando o servico? $maquinas \r\n")
 

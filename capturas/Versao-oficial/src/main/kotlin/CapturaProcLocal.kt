@@ -14,8 +14,8 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='root',
-        password='1234',
+        user='Power',
+        password='urubu100',
         database='PowerTechSolutions'
         )
         
@@ -55,7 +55,7 @@ print("Capturas realizadas com sucesso!")
             val nomeArquivoPyDefault = "CodigoPythonProc.py"
 
             File(nomeArquivoPyDefault).writeText(codigoPy)
-            Runtime.getRuntime().exec("python $nomeArquivoPyDefault")
+            Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
 
             println("Processos Cadastrados com Sucesso")
 

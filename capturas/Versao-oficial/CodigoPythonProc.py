@@ -10,8 +10,8 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='root',
-        password='1234',
+        user='Power',
+        password='urubu100',
         database='PowerTechSolutions'
         )
         
@@ -35,7 +35,7 @@ try:
                     INSERT INTO Processos (nomeProcesso, uso_ram, data_hora, fkMaquina
                     )
                     VALUES (%s, %s, %s, %s)
-                    ''', (nome, ram, data_hora_captura, 1))
+                    ''', (nome, ram, data_hora_captura, 2))
                     
 
 finally:
