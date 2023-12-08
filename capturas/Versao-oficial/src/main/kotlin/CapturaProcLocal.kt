@@ -14,7 +14,7 @@ try:
         #Estabelece uma conexao com o banco de dados
         conexao = mysql.connector.connect(
         host='localhost',
-        user='Power',
+        user='root',
         password='urubu100',
         database='PowerTechSolutions'
         )

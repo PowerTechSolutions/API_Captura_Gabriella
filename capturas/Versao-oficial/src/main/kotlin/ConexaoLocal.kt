@@ -6,7 +6,7 @@ open class ConexaoLocal {
             val dataSource = BasicDataSource()
             dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
             dataSource.url = "jdbc:mysql://localhost:3306/PowerTechSolutions?serverTimezone=UTC&useSSL=false"
-            dataSource.username = "Power"
+            dataSource.username = "root"
             dataSource.password = "urubu100"
             return JdbcTemplate(dataSource)
         }

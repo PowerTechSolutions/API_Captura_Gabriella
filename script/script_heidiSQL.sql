@@ -205,21 +205,61 @@ CREATE TABLE IF NOT EXISTS Alertas(
 			REFERENCES Unidade_de_negocio(IDUnidade)
 );
 	
+
 CREATE TABLE IF NOT EXISTS Processos(
 IDProcesso INT AUTO_INCREMENT,
 PID INT,
 nomeProcesso VARCHAR(255),
 cpu_processo FLOAT,
 uso_ram FLOAT,
+tempo_user DOUBLE,
 data_hora DATETIME,
 fkMaquina INT,
-CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
-REFERENCES Maquinas(idMaquina),
+    CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
+        REFERENCES Maquinas(idMaquina),
 constraint pkCompostaP primary key (IDProcesso, fkMaquina)
 );
 
-SELECT * FROM Maquinas;
-    
+-- criando um trigger da tabela processos
+
+DELIMITER $$
+CREATE TRIGGER Metricas_Alerta_Processo
+    AFTER INSERT ON Processos
+FOR EACH ROW
+BEGIN
+
+    IF NEW.uso_ram >= 90.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 3, NEW.IDProcesso, NEW.fkMaquina);
+    ELSEIF NEW.uso_ram >= 87.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 2, NEW.IDProcesso, NEW.fkMaquina);
+    ELSEIF NEW.uso_ram <= 85.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 1, NEW.IDProcesso, NEW.fkMaquina);
+    END IF;
+
+END;
+$$
+
+DELIMITER ;
+
+CREATE TABLE IF NOT EXISTS Alerta_Processo(
+IDAlertaProcessos INT AUTO_INCREMENT,
+PID INT,
+nomeProcesso VARCHAR(255),
+cpu_processo FLOAT,
+uso_ram FLOAT,
+data_hora DATETIME,
+tipo_alerta int,
+encerrado boolean default 0,
+FKProcesso INT,
+      CONSTRAINT fkProcesso FOREIGN KEY (fkProcesso)
+        REFERENCES Processos(idProcesso),
+fkMaquina INT,
+    CONSTRAINT fkMaquinaP FOREIGN KEY (fkMaquina)
+        REFERENCES Maquinas(idMaquina),
+constraint pkCompostaA primary key (IDAlertaProcessos, fkProcesso, fkMaquina)
 
 -- Aréa de inserts para testes de funcionalidade 
 
@@ -252,8 +292,6 @@ INSERT into Usuario_Dashboard VALUES
 
 INSERT into Usuario_Dashboard VALUES
 (NULL,'gabriella','gabi@teste.com','10987654321','18080226',1,1);
-
-
 
 
 INSERT INTO Componentes_cadastrados values
@@ -297,10 +335,5 @@ INSERT INTO Componentes_monitorados VALUES
 (NULL,5,3),
 (NULL,6,3);
 
-select * from processos;
-
-SELECT IDMaquina, Apelido, ROUND(uso_ram, 2) AS Uso_ram
-FROM processos 
-JOIN maquinas ON fkMaquina = IDMaquina 
-GROUP BY IDMaquina, Apelido, ROUND(uso_ram, 2);
-
+SELECT IDMaquina, nomeProcesso, ROUND(uso_ram,2) AS Uso_ram FROM processos 
+  JOIN maquinas ON fkMaquina = IDMaquina;

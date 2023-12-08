@@ -14,9 +14,9 @@ import pymssql
 try:
         #Estabelece uma conexao com o banco de dados
         conexao = pymssql.connector.connect(
-        server='34.194.127.191',
-        user='sa',
-        password='myLOVEisthe0506',
+        host='localhost',
+        user='root',
+        password='1234.s',
         database='PowerTechSolutions'
         )
         

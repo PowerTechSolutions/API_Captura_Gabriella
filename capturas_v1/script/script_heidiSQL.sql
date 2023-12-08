@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS Alertas(
 			REFERENCES Unidade_de_negocio(IDUnidade)
 );
 	
-
+	
 CREATE TABLE IF NOT EXISTS Processos(
 IDProcesso INT AUTO_INCREMENT,
 PID INT,
@@ -219,7 +219,45 @@ CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
 REFERENCES Maquinas(idMaquina),
 constraint pkCompostaP primary key (IDProcesso, fkMaquina)
 );
-    
+
+-- criando um trigger da tabela processos
+
+DELIMITER $$
+CREATE TRIGGER Metricas_Alerta_Processo
+    AFTER INSERT ON Processos
+FOR EACH ROW
+BEGIN
+
+    IF NEW.uso_ram >= 90.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 3, NEW.IDProcesso, NEW.fkMaquina);
+    ELSEIF NEW.uso_ram >= 87.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 2, NEW.IDProcesso, NEW.fkMaquina);
+    ELSEIF NEW.uso_ram <= 85.0 THEN
+        INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
+        VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 1, NEW.IDProcesso, NEW.fkMaquina);
+    END IF;
+
+END;
+$$ DELIMITER ;
+
+CREATE TABLE IF NOT EXISTS Alerta_Processo(
+IDAlertaProcessos INT AUTO_INCREMENT,
+PID INT,
+nomeProcesso VARCHAR(255),
+cpu_processo FLOAT,
+uso_ram FLOAT,
+data_hora DATETIME,
+tipo_alerta int,
+encerrado boolean default 0,
+FKProcesso INT,
+      CONSTRAINT fkProcesso FOREIGN KEY (fkProcesso)
+        REFERENCES Processos(idProcesso),
+fkMaquina INT,
+    CONSTRAINT fkMaquinaP FOREIGN KEY (fkMaquina)
+        REFERENCES Maquinas(idMaquina),
+constraint pkCompostaA primary key (IDAlertaProcessos, fkProcesso, fkMaquina)
 
 -- Aréa de inserts para testes de funcionalidade 
 
