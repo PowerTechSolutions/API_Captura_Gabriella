@@ -4,34 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5a5435b-374a-438f-98a7-323981723ccd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../site/public/dashboard/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/../site/public/dashboard/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../site/public/dashboard/maquina_fisica.html" beforeDir="false" afterPath="$PROJECT_DIR$/../site/public/dashboard/maquina_fisica.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../site/src/models/medidaModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/../site/src/models/medidaModel.js" afterDir="false" />
-    </list>
+    <list default="true" id="f5a5435b-374a-438f-98a7-323981723ccd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2XaL4pdL7mAHUhGxtrWezkydFdK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
-    <option name="sortKey" value="BY_TIME_DESCENDING" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/Admin/Documents/API_Captura_Gabriella/capturas-power/power-tech",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>

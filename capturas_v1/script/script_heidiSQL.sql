@@ -205,22 +205,23 @@ CREATE TABLE IF NOT EXISTS Alertas(
 			REFERENCES Unidade_de_negocio(IDUnidade)
 );
 	
-	
-CREATE TABLE IF NOT EXISTS Processos(
-IDProcesso INT AUTO_INCREMENT,
-PID INT,
-nomeProcesso VARCHAR(255),
-cpu_processo FLOAT,
-uso_ram FLOAT,
-tempo_user DOUBLE,
-data_hora DATETIME,
-fkMaquina INT,
-CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
-REFERENCES Maquinas(idMaquina),
-constraint pkCompostaP primary key (IDProcesso, fkMaquina)
+CREATE TABLE IF NOT EXISTS Processos (
+    IDProcesso INT AUTO_INCREMENT,
+    PID INT,
+    nomeProcesso VARCHAR(255),
+    cpu_processo FLOAT,
+    uso_ram FLOAT,
+    tempo_user DOUBLE,
+    data_hora DATETIME,
+    fkMaquina INT,
+    CONSTRAINT fkMaquina FOREIGN KEY (fkMaquina)
+        REFERENCES Maquinas(idMaquina),
+    CONSTRAINT pkCompostaP PRIMARY KEY (IDProcesso, fkMaquina)
 );
 
--- criando um trigger da tabela processos
+
+
+-- criando um trigger da tabela processos (mysql)
 
 DELIMITER $$
 CREATE TRIGGER Metricas_Alerta_Processo
@@ -228,13 +229,13 @@ CREATE TRIGGER Metricas_Alerta_Processo
 FOR EACH ROW
 BEGIN
 
-    IF NEW.uso_ram >= 90.0 THEN
+    IF NEW.uso_ram >= 10.0 THEN
         INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
         VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 3, NEW.IDProcesso, NEW.fkMaquina);
-    ELSEIF NEW.uso_ram >= 87.0 THEN
+    ELSEIF NEW.uso_ram >= 6.0 THEN
         INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
         VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 2, NEW.IDProcesso, NEW.fkMaquina);
-    ELSEIF NEW.uso_ram <= 85.0 THEN
+    ELSEIF NEW.uso_ram <= 2.0 THEN
         INSERT INTO Alerta_Processo (PID, nomeProcesso, cpu_processo, uso_ram, data_hora, tipo_alerta, fkProcesso, fkMaquina)
         VALUES (NEW.PID, NEW.nomeProcesso, NEW.cpu_processo, NEW.uso_ram, now(), 1, NEW.IDProcesso, NEW.fkMaquina);
     END IF;
@@ -242,22 +243,22 @@ BEGIN
 END;
 $$ DELIMITER ;
 
-CREATE TABLE IF NOT EXISTS Alerta_Processo(
-IDAlertaProcessos INT AUTO_INCREMENT,
-PID INT,
-nomeProcesso VARCHAR(255),
-cpu_processo FLOAT,
-uso_ram FLOAT,
-data_hora DATETIME,
-tipo_alerta int,
-encerrado boolean default 0,
-FKProcesso INT,
-      CONSTRAINT fkProcesso FOREIGN KEY (fkProcesso)
-        REFERENCES Processos(idProcesso),
-fkMaquina INT,
-    CONSTRAINT fkMaquinaP FOREIGN KEY (fkMaquina)
-        REFERENCES Maquinas(idMaquina),
-constraint pkCompostaA primary key (IDAlertaProcessos, fkProcesso, fkMaquina)
+
+CREATE TABLE IF NOT EXISTS Alerta_Processo (
+    IDAlertaProcessos INT AUTO_INCREMENT,
+    PID INT,
+    nomeProcesso VARCHAR(255),
+    cpu_processo FLOAT,
+    uso_ram FLOAT,
+    data_hora DATETIME,
+    tipo_alerta INT,
+    encerrado BOOLEAN DEFAULT 0,
+    FKProcesso INT,
+    CONSTRAINT fkProcesso FOREIGN KEY (FKProcesso) REFERENCES Processos(IDProcesso),
+    fkMaquina INT,
+    CONSTRAINT fkMaquinaP FOREIGN KEY (fkMaquina) REFERENCES Maquinas(idMaquina),
+    CONSTRAINT pkCompostaA PRIMARY KEY (IDAlertaProcessos, FKProcesso, fkMaquina)
+);
 
 -- Aréa de inserts para testes de funcionalidade 
 
@@ -333,5 +334,30 @@ INSERT INTO Componentes_monitorados VALUES
 (NULL,5,3),
 (NULL,6,3);
 
-SELECT IDMaquina, nomeProcesso, ROUND(uso_ram,2) AS Uso_ram FROM processos 
-  JOIN maquinas ON fkMaquina = IDMaquina;
+SELECT * FROM processos;
+
+
+select IDMaquina, Apelido, nomeProcesso, uso_ram as Uso_ram, tipo_alerta from Alerta_Processo join Maquinas on
+  fkMaquina= IDMaquina ORDER by data_hora DESC LIMIT 30;
+
+select * from Alerta_Processo;
+
+select IDMaquina, Apelido, nomeProcesso, uso_ram, tipo_alerta from Alerta_Processo join Maquinas on
+fkMaquina= IDMaquina WHERE tipo_alerta= 2 ORDER by data_hora DESC LIMIT 30;
+
+select * from Processos where fkMaquina=2;
+
+SELECT uso_ram AS ram, data_hora AS dataHora
+  FROM Processos
+  ORDER BY data_hora DESC
+  LIMIT 10;
+
+select COUNT(tipo_alerta) AS tipo_alerta from Alerta_Processo join Maquinas on
+  fkMaquina= IDMaquina WHERE tipo_alerta= 3;
+
+select IDMaquina, Apelido, nomeProcesso, uso_ram, tipo_alerta from Alerta_Processo join Maquinas on
+  fkMaquina= IDMaquina WHERE tipo_alerta= 3 ORDER by data_hora DESC LIMIT 30;
+
+select COUNT(tipo_alerta) AS tipo_alerta from Alerta_Processo join Maquinas on
+  fkMaquina= IDMaquina WHERE tipo_alerta= 2 ORDER by data_hora DESC LIMIT 30;
+desc Alerta_Processo;

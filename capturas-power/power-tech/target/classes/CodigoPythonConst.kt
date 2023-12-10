@@ -39,7 +39,7 @@ cpu = psutil.cpu_percent(interval=1)
 ram = psutil.virtual_memory()
 
 try:
-    mydb = mysql.connector.connect(host = 'localhost', user = 'root',password = '@myLOVEisthe0506',database = 'PowerTechSolutions')
+    mydb = mysql.connector.connect(host = 'localhost', user = 'Power',password = 'urubu100',database = 'PowerTechSolutions')
     if mydb.is_connected():
         db_info = mydb.get_server_info()
         mycursor = mydb.cursor()
@@ -62,7 +62,7 @@ finally:
         val nomeArquivoPyDefault = "CodigoPythonConst.py"
 
         File(nomeArquivoPyDefault).writeText(codigoPython)
-        Runtime.getRuntime().exec("python3 $nomeArquivoPyDefault")
+        Runtime.getRuntime().exec("py $nomeArquivoPyDefault")
 
         println("Python excetudado para CPU/RAM")
 
